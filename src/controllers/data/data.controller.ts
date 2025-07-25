@@ -1,21 +1,24 @@
 import data from "@/routes/data.route";
 import dataModel from "../../models/data/data.model";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 
-export const getAllData = async (req: Request, res: Response): Promise<void> => {
+export const getAllData = async (req: Request, res: Response,next: NextFunction): Promise<Response | void> => {
   try {
     const all=await dataModel.find()
     console.log('get alll',all)
-    res.status(200).json({ success:true,message: "Fetched all data",data:all });
+    return res.status(200).json({ success:true,message: "Fetched all data",data:all,status:true });
   } catch (error) {
-    res.status(500).json({ success:false,message: "Server error"});
+    next(error)
+    // return res.status(500).json({ success:false,message: "Server error"});
   }
 };
 
 
 
-export const fetchMatchingRecords=async(req:Request,res:Response):Promise<void>=>{
+export const fetchMatchingRecords=async(req:Request,res:Response, next: NextFunction):Promise<Response | void>=>{
 
+
+ 
 
     try {
     
@@ -24,8 +27,8 @@ export const fetchMatchingRecords=async(req:Request,res:Response):Promise<void>=
       console.log("got value",value)
 
     if (!value) {
-      res.status(400).json({ success: false, message: 'Search value is required' });
-      return;
+      return res.status(400).json({ success: false, message: 'Search value is required' });
+      
     }
 
     const regex = new RegExp(value, 'i'); 
@@ -37,11 +40,16 @@ export const fetchMatchingRecords=async(req:Request,res:Response):Promise<void>=
       ]
     });
 
+    if(matchedData.length==0){
+     return  res.status(200).json({ success:true,message: "not found",data:matchedData,status:false });
+    }
+
 
     console.log('get matched data ',matchedData )
-    res.status(200).json({ success:true,message: "Fetched all data",data:matchedData });
+   return  res.status(200).json({ success:true,message: "Fetched all data",data:matchedData ,status:true });
   } catch (error) {
-    res.status(500).json({ success:false,message: "Server error"});
+    next(error)
+    // return res.status(500).json({ success:false,message: "Server error"});
   }
 
 }
