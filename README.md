@@ -26,7 +26,7 @@ This is the backend API for the **Chatbot** application built using **Node.js**,
 
 ```bash
 git clone https://github.com/your-username/chatbot-backend.git
-cd chatbot-backend
+
 
 
 2. Install Dependencies
