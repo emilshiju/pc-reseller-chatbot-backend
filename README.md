@@ -37,8 +37,8 @@ npm install
 In the project root, create a .env file and add the following:
 
 PORT=3000
-dbURI='mongodb+srv://chatbot:Q1234567@cluster0.neqzrzn.mongodb.net/chatbot'
 
+dbURI='mongodb+srv://<username>:<password>@<cluster>.mongodb.net/<database>'
 
 
 🚀 Run the Server
