@@ -8,9 +8,8 @@ export const globalErrorHandler = (
   res: Response,
   next: NextFunction
 ) => {
-  console.error("🔥 Global Error:", err);
+  console.error(" Global Error:", err);
 
-  res.status(500).json({success: false,message: "Internal Server Error",
-  });
+  res.status(500).json({success: false,message: "Internal Server Error" });
 };
 
